@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiat Showroom | Pandina, Grande Panda, 600 e 500</title>
+<style>
+  :root{
+    --fiat-red:#b0121b; --dark:#141414; --gray:#5f5f5f;
+    --light:#f6f5f2; --card:#fff; --radius:18px;
+    --shadow:0 12px 32px rgba(0,0,0,.10);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--light);color:var(--dark)}
+  img{display:block;max-width:100%}
+  .container{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:50;background:rgba(20,20,20,.96);backdrop-filter:blur(8px);color:#fff}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+  .logo-badge{width:44px;height:44px;border-radius:50%;background:var(--fiat-red);display:flex;align-items:center;justify-content:center;font-weight:800;letter-spacing:1px;font-size:14px;box-shadow:inset 0 0 0 3px #fff3}
+  .logo-txt{font-weight:700;letter-spacing:2px;font-size:14px}
+  .logo-txt small{display:block;font-weight:400;letter-spacing:1px;color:#bbb;font-size:11px}
+  nav a{color:#ddd;text-decoration:none;margin-left:22px;font-size:14px;font-weight:500}
+  nav a:hover{color:#fff}
+
+  /* HERO */
+  .hero{background:linear-gradient(120deg,#141414 0%,#2a2a2a 60%,#3a1013 100%);color:#fff;padding:72px 0 64px;text-align:center}
+  .hero h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-1px}
+  .hero h1 span{color:#ff4d55}
+  .hero p{margin-top:14px;color:#c9c9c9;font-size:clamp(15px,2vw,18px)}
+  .hero .line{width:70px;height:4px;background:var(--fiat-red);margin:22px auto 0;border-radius:2px}
+
+  /* GRIGLIA MODELLI */
+  .section-title{font-size:26px;font-weight:800;margin:48px 0 6px}
+  .section-sub{color:var(--gray);margin-bottom:26px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;padding-bottom:60px}
+  .card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(0,0,0,.16)}
+  .card .ph{height:200px;overflow:hidden;background:#eee}
+  .card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .card:hover .ph img{transform:scale(1.05)}
+  .card .body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
+  .card h3{font-size:20px;font-weight:800}
+  .card .tag{color:var(--gray);font-size:14px;margin:6px 0 14px;flex:1}
+  .card .row{display:flex;align-items:center;justify-content:space-between}
+  .price{font-weight:800;color:var(--fiat-red)}
+  .btn{background:var(--dark);color:#fff;border:none;padding:10px 18px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;transition:background .2s}
+  .btn:hover{background:var(--fiat-red)}
+  .btn.red{background:var(--fiat-red)}
+  .btn.red:hover{background:#8d0e15}
+
+  /* DETTAGLIO */
+  #detail{padding:34px 0 70px}
+  .back{background:none;border:2px solid #ddd;border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer;font-size:14px;margin-bottom:26px;transition:.2s}
+  .back:hover{border-color:var(--fiat-red);color:var(--fiat-red)}
+  .d-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px;margin-bottom:20px}
+  .d-head h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+  .d-head .tag{color:var(--gray);font-size:16px;margin-top:6px}
+  .d-head .price{font-size:22px}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+  .chip{background:#fff;border:1px solid #e5e2dc;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:#444}
+
+  .gallery .main{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#e8e6e2}
+  .gallery .main img{width:100%;height:min(56vw,500px);object-fit:cover;animation:fade .45s ease}
+  @keyframes fade{from{opacity:.25}to{opacity:1}}
+  .thumbs{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+  .thumbs img{width:110px;height:74px;object-fit:cover;border-radius:12px;cursor:pointer;opacity:.65;border:3px solid transparent;transition:.2s}
+  .thumbs img:hover{opacity:1}
+  .thumbs img.active{opacity:1;border-color:var(--fiat-red)}
+
+  h3.tit{font-size:22px;font-weight:800;margin:44px 0 18px;display:flex;align-items:center;gap:10px}
+  h3.tit::before{content:"";width:6px;height:24px;background:var(--fiat-red);border-radius:3px}
+
+  .force{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .f-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 4px 16px rgba(0,0,0,.06);border-top:3px solid var(--fiat-red)}
+  .f-card .ico{font-size:26px}
+  .f-card h4{margin:10px 0 6px;font-size:16px}
+  .f-card p{color:var(--gray);font-size:14px;line-height:1.55}
+
+  .trims{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .t-card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 4px 16px rgba(0,0,0,.06);display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .t-card.top::after{content:"TOP DI GAMMA";position:absolute;top:14px;right:-34px;background:var(--fiat-red);color:#fff;font-size:10px;font-weight:800;padding:5px 40px;transform:rotate(35deg);letter-spacing:1px}
+  .t-card h4{font-size:19px;font-weight:800}
+  .t-card .p{color:var(--fiat-red);font-weight:800;margin:4px 0 12px}
+  .t-card .desc{color:var(--gray);font-size:13.5px;line-height:1.5;margin-bottom:14px}
+  .t-card ul{list-style:none;margin-top:auto}
+  .t-card li{font-size:13.5px;padding:7px 0;border-top:1px dashed #e6e3dd;display:flex;gap:8px}
+  .t-card li::before{content:"✓";color:var(--fiat-red);font-weight:800}
+
+  footer{background:var(--dark);color:#9a9a9a;padding:34px 0;font-size:13px;text-align:center}
+  footer b{color:#fff}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container bar">
+    <div class="logo" onclick="goHome()">
+      <div class="logo-badge">FIAT</div>
+      <div class="logo-txt">SHOWROOM<small>Gamma Italia</small></div>
+    </div>
+    <nav><a href="#" onclick="goHome();return false;">Modelli</a></nav>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero">
+    <div class="container">
+      <h1>La gamma <span>Fiat</span> di oggi</h1>
+      <p>Pandina, Grande Panda, 600 e 500: scegli il tuo modello e scopri foto, punti di forza e allestimenti.</p>
+      <div class="line"></div>
+    </div>
+  </div>
+  <div class="container">
+    <h2 class="section-title">I modelli</h2>
+    <p class="section-sub">Clicca su un modello per aprire la scheda completa.</p>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- DETTAGLIO -->
+<section id="detail" hidden></section>
+
+<footer>
+  <div class="container">
+    <p><b>FIAT Showroom</b> — sito demo non ufficiale a scopo dimostrativo.</p>
+    <p>Prezzi di listino indicativi 2025/2026 (IPT esclusa). Le immagini appartengono ai rispettivi proprietari.</p>
+  </div>
+</footer>
+
+<script>
+const MODELS = {
+  pandina: {
+    nome:"Fiat Pandina", tagline:"L'icona di sempre, rinnovata: la city car più amata d'Italia",
+    prezzo:"da 15.950 €",
+    chips:["1.0 FireFly Hybrid 65/70 CV","Lunghezza 3,65 m","5 posti","Ok neopatentati"],
+    foto:[
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/42d5ba14b-a37a-441a-9cfd-f8de51b1f6d77616.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/12d5ba14b-a37a-441a-9cfd-f8de51b1f6d73094.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/12d5ba14b-a37a-441a-9cfd-f8de51b1f6d77577.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/22d5ba14b-a37a-441a-9cfd-f8de51b1f6d71680.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/02d5ba14b-a37a-441a-9cfd-f8de51b1f6d71314.png"
+    ],
+    forza:[
+      {i:"🏆",t:"La più venduta d'Italia",d:"Erede della Panda, è stabilmente in testa alle vendite italiane: concreta, affidabile e ora con stile aggiornato e nuovo logo FIAT."},
+      {i:"⚡",t:"Hybrid di serie",d:"Motore 1.0 FireFly mild hybrid da 65/70 CV: consumi ridotti (circa 4,9 l/100 km) e accesso alle zone a traffico limitato dove previsto."},
+      {i:"🎓",t:"Per tutti, anche neopatentati",d:"Potenza e potenza specifica contenute: guidabile anche da chi ha appena preso la patente."},
+      {i:"📦",t:"Piccola fuori, grande dentro",d:"Solo 365 cm di lunghezza ma 5 posti e un bagagliaio da riferimento: parcheggia ovunque e carica di tutto."},
+      {i:"🛡️",t:"Dotazione da grande",d:"Già sulla Pop: climatizzatore manuale e sensori di parcheggio posteriori di serie, con ADAS di assistenza alla guida."}
+    ],
+    allestimenti:[
+      {nome:"Pop", prezzo:"15.950 €", desc:"L'essenziale intelligente, perfetta per la città.", dot:["Climatizzatore manuale","Sensori di parcheggio posteriori","Radio con Bluetooth","Nuovo logo FIAT e paraurti ridisegnato"]},
+      {nome:"Icon", prezzo:"16.800 €", desc:"Più stile e tecnologia per l'uso quotidiano.", dot:["Touchscreen 7\" con Apple CarPlay / Android Auto","Dettagli in tinta carrozzeria","Fendinebbia e cerchi dedicati","Quadro strumenti digitale"]},
+      {nome:"Cross", prezzo:"19.050 €", top:true, desc:"Look avventuroso e spirito da piccola SUV.", dot:["Protezioni e passaruota neri stile off-road","Barre al tetto e assetto rialzato","Interni e sedili dedicati Cross","Dotazione più completa della gamma"]}
+    ]
+  },
+
+  grandepanda: {
+    nome:"Fiat Grande Panda", tagline:"La nuova generazione della famiglia Panda: spaziosa, furba, per tutti",
+    prezzo:"da 17.900 €",
+    chips:["Benzina 100 CV · Hybrid 110 CV · Elettrica","Lunghezza 3,99 m","5 posti","Best Small Car Autocar 2025"],
+    foto:[
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/42d5ba14b-a37a-441a-9cfd-f8de51b1f6d76154.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/12d5ba14b-a37a-441a-9cfd-f8de51b1f6d71790.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/02d5ba14b-a37a-441a-9cfd-f8de51b1f6d72681.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/62d5ba14b-a37a-441a-9cfd-f8de51b1f6d74405.png"
+    ],
+    forza:[
+      {i:"🔋",t:"Tre alimentazioni",d:"Unica nel suo segmento: benzina turbo 100 CV, Hybrid 110 CV o 100% elettrica. Scegli la mobilità che preferisci."},
+      {i:"📐",t:"Spazio da record",d:"Con 3,99 m di lunghezza offre uno dei bagagliai e delle abitabilità migliori della categoria: perfetta per la famiglia."},
+      {i:"💡",t:"Design pixel LED",d:"Fari a LED a matrice di pixel, scritta PANDA in 3D sulle porte e stile squadrato ispirato alla Panda del 1980."},
+      {i:"🏅",t:"Premiata in Europa",d:"Eletta 'Best Small Car' agli Autocar Awards 2025: riconoscimento internazionale per qualità e progetto."},
+      {i:"🌿",t:"Sostenibile e furba",d:"Materiali riciclati e tessuti innovativi (come il BAMBOX in fibra di bamboo sulla La Prima) e tante soluzioni pratiche 'furbe'."}
+    ],
+    allestimenti:[
+      {nome:"Pop", prezzo:"da 17.900 €", desc:"Concretezza Panda: tutto quello che serve.", dot:["ADAS di sicurezza di serie","Climatizzatore manuale","Design squadrato con firma LED","Ideale anche per neopatentati (benzina)"]},
+      {nome:"Icon", prezzo:"da 19.400 €", desc:"Tecnologia e stile per il quotidiano.", dot:["Fari anteriori e posteriori a LED","Infotainment 10,25\" con CarPlay/Android Auto","Spoiler posteriore e cerchi dedicati","Sensori e comfort di livello superiore"]},
+      {nome:"La Prima", prezzo:"da 22.400 €", top:true, desc:"Il top: materiali premium e sostenibilità.", dot:["Cerchi in lega da 17\"","Vetri posteriori oscurati","Tessuto BAMBOX in fibra di bamboo","Finiture e dotazioni esclusive"]}
+    ]
+  },
+
+  seicento: {
+    nome:"Fiat 600", tagline:"Il crossover compatto che unisce stile italiano e tecnologia",
+    prezzo:"da 23.850 €",
+    chips:["Benzina 100 CV · Hybrid 110 CV · Elettrica","Lunghezza 4,17 m","5 posti","Fino a 600+ km di autonomia (elettrica)"],
+    foto:[
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/12d5ba14b-a37a-441a-9cfd-f8de51b1f6d77915.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/22d5ba14b-a37a-441a-9cfd-f8de51b1f6d73714.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/02d5ba14b-a37a-441a-9cfd-f8de51b1f6d75243.png"
+    ],
+    forza:[
+      {i:"🚙",t:"Vero spirito crossover",d:"Posizione di guida rialzata, presenza su strada e dimensioni ideali (4,17 m) per città e viaggi."},
+      {i:"🔌",t:"Elettrica o Hybrid",d:"Versione 100% elettrica con oltre 600 km di autonomia combinata o Hybrid 110 CV per il massimo dell'efficienza."},
+      {i:"🖥️",t:"Tecnologia di bordo",d:"Infotainment 10,25\", quadro digitale 7\", ADAS di livello 2 e ricarica wireless per smartphone."},
+      {i:"🧳",t:"Spazio e comfort",d:"Bagagliaio fino a 500 litri e abitacolo accogliente: il compagno ideale per famiglia e tempo libero."},
+      {i:"🇮🇹",t:"Design italiano",d:"Linee morbide e fari iconici che richiamano la tradizione Fiat, con dettagli moderni e colori esclusivi."}
+    ],
+    allestimenti:[
+      {nome:"Pop", prezzo:"23.850 €", desc:"L'ingresso nel mondo 600, già completo.", dot:["Fari LED e infotainment 10,25\"","ADAS di serie (frenata automatica, corsia)","Climatizzatore e quadro digitale","Cerchi in lega da 16\""]},
+      {nome:"Icon", prezzo:"25.650 €", desc:"Il bilanciamento perfetto tra stile e dotazioni.", dot:["Cerchi in lega da 17\"","Climatizzatore automatico","Apple CarPlay / Android Auto wireless","Sensori di parcheggio e dettagli cromati"]},
+      {nome:"Business", prezzo:"25.900 €", desc:"Pensato per flotte e professionisti.", dot:["Navigatore integrato","ADAS avanzati per la guida assistita","Connettività e servizi professionali","Comfort da categoria superiore"]},
+      {nome:"La Prima", prezzo:"28.650 €", top:true, desc:"L'eccellenza 600: tutto incluso, stile esclusivo.", dot:["Cerchi in lega da 18\"","Interni premium e sedili elettrici","Tetto e finiture esclusive","Dotazione ADAS e comfort completa"]}
+    ]
+  },
+
+  cinquecento: {
+    nome:"Fiat 500", tagline:"L'icona senza tempo, oggi anche Hybrid ed elettrica",
+    prezzo:"da 19.900 €",
+    chips:["1.0 Hybrid 65 CV · Elettrica 500e","Lunghezza 3,63 m","4 posti","Icona del design italiano"],
+    foto:[
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/12d5ba14b-a37a-441a-9cfd-f8de51b1f6d75228.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/02d5ba14b-a37a-441a-9cfd-f8de51b1f6d75318.png",
+      "https://image.qwenlm.ai/public_source/44f09991-342b-4ea1-86a8-5b2f7b721f77/32d5ba14b-a37a-441a-9cfd-f8de51b1f6d71293.png"
+    ],
+    forza:[
+      {i:"🌟",t:"Icona mondiale",d:"Dal 1957 il simbolo dello stile italiano nel mondo: linee inconfondibili esposte anche al MoMA di New York."},
+      {i:"🏙️",t:"Regina della città",d:"3,63 m, sterzo leggero e parcheggio facilissimo: nata per muoversi con eleganza nel traffico urbano."},
+      {i:"⚡",t:"Hybrid o 100% elettrica",d:"La nuova 500 Hybrid 1.0 da 65 CV affianca la 500e elettrica: efficienza o zero emissioni, stesso fascino."},
+      {i:"💎",t:"Curata nei dettagli",d:"Interni raffinati, luci ambientali, quadro digitale e infotainment moderno in un abito retrò-futurista."},
+      {i:"🎨",t:"Personalizzabile",d:"Colori, cerchi e dettagli esclusivi per rendere ogni 500 unica come chi la guida."}
+    ],
+    allestimenti:[
+      {nome:"Pop", prezzo:"19.900 €", desc:"L'icona essenziale, perfetta in città.", dot:["Motore 1.0 Hybrid 65 CV","Quadro digitale TFT 7\"","Radio touchscreen con CarPlay/Android Auto","Luci diurne LED"]},
+      {nome:"Torino", prezzo:"20.900 €", desc:"Omaggio alla città che ha fatto la storia FIAT.", dot:["Dettagli estetici esclusivi","Cerchi dedicati e finiture specifiche","Dotazione arricchita rispetto alla Pop"]},
+      {nome:"Icon", prezzo:"21.400 €", desc:"Il cuore della gamma: stile e tech.", dot:["Fari full LED","Infotainment 10,25\"","Climatizzatore automatico","Sensori parcheggio posteriori"]},
+      {nome:"La Prima", prezzo:"24.400 €", top:true, desc:"La 500 definitiva, lusso in formato city.", dot:["Tetto panoramico in vetro","Interni premium e sedili regolabili","ADAS completi di livello 2","Cerchi in lega diamantati"]}
+    ]
+  }
+};
+
+/* ---------- LOGICA ---------- */
+const grid = document.getElementById('grid');
+const home = document.getElementById('home');
+const detail = document.getElementById('detail');
+
+function buildHome(){
+  grid.innerHTML = Object.entries(MODELS).map(([id,m])=>`
+    <article class="card" onclick="openModel('${id}')" tabindex="0"
+      onkeydown="if(event.key==='Enter')openModel('${id}')">
+      <div class="ph"><img src="${m.foto[0]}" alt="${m.nome}"></div>
+      <div class="body">
+        <h3>${m.nome}</h3>
+        <p class="tag">${m.tagline}</p>
+        <div class="row">
+          <span class="price">${m.prezzo}</span>
+          <button class="btn">Scopri il modello →</button>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+function openModel(id){
+  const m = MODELS[id];
+  detail.innerHTML = `
+    <div class="container">
+      <button class="back" onclick="goHome()">← Torna alla gamma</button>
+      <div class="d-head">
+        <div><h2>${m.nome}</h2><p class="tag">${m.tagline}</p></div>
+        <span class="price">${m.prezzo}</span>
+      </div>
+      <div class="chips">${m.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+
+      <div class="gallery">
+        <div class="main"><img id="mainImg" src="${m.foto[0]}" alt="${m.nome}"></div>
+        <div class="thumbs">
+          ${m.foto.map((f,i)=>`<img class="${i===0?'active':''}" src="${f}" alt="Foto ${i+1}" onclick="setImg(this,'${f}')">`).join('')}
+        </div>
+      </div>
+
+      <h3 class="tit">Punti di forza</h3>
+      <div class="force">
+        ${m.forza.map(f=>`<div class="f-card"><div class="ico">${f.i}</div><h4>${f.t}</h4><p>${f.d}</p></div>`).join('')}
+      </div>
+
+      <h3 class="tit">Allestimenti</h3>
+      <div class="trims">
+        ${m.allestimenti.map(t=>`
+          <div class="t-card ${t.top?'top':''}">
+            <h4>${t.nome}</h4>
+            <div class="p">${t.prezzo}</div>
+            <p class="desc">${t.desc}</p>
+            <ul>${t.dot.map(d=>`<li>${d}</li>`).join('')}</ul>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  home.hidden = true;
+  detail.hidden = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function setImg(el, src){
+  const main = document.getElementById('mainImg');
+  main.style.animation='none'; void main.offsetWidth; main.style.animation='';
+  main.src = src;
+  document.querySelectorAll('.thumbs img').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function goHome(){
+  detail.hidden = true;
+  home.hidden = false;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !detail.hidden) goHome(); });
+
+buildHome();
+</script>
+</body>
+</html>
